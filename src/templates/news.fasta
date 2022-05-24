@@ -1,0 +1,51 @@
+>Server repaired - please resubmit your jobs|2014/10/30
+Our server has been replaced and is now working again. Unfortunately, the was a problem for already submitted jobs which could not be run correctly. Please submit them again.
+>Server failure|2014/10/22
+The computer running our computations has had an hardware failure. We are currently replacing it by a new server which will hopefully be in place beginning of next week. Sorry for the inconvenience.
+>New map2bed script allows analyzing data sequenced with higher depths|2013/07/26
+The cost of sequencing is further decreasing, and users asked us to allow uploading of files bigger than 60 MB for analysis with DARIO. This is however not possible given our limited storage capacity. To cope with this, we have updated our map2bed.pl script which can now remove hits with less than X reads support (run with parameter -r X, e.g. -r 2). This significantly reduces the size of resulting BED-files.
+>High Load|2012/02/22
+Due to a large number of computational intensive jobs our servers are experiencing exceptional high load. Please be patient, all submitted jobs will finish soon!
+We experienced some issues with our network. As a result, some of the jobs, that have been submitted within this period, freezed. We kindly ask all affected users to re-submit their jobs.
+>Server maintenance|2011/12/28
+Due to maintenance of our servers, the DARIO web service is not available on 28th of December. Sorry for the inconvenience. We wish a happy new year to all our users!
+>Network issues|2011/10/10
+We experienced some issues with our network. As a result, some of the jobs, that have been submitted within this period, freezed. We kindly ask all affected users to re-submit their jobs.
+>A little bit of robustness|2011/06/22
+We added a number of small changes to DARIO that increase the
+overall robustness with uploaded BED-files. For example, if the
+score column in the BED file states that zero reads were obtained, those 
+rows are instead considered to represent a single read. Altogether, it should now 
+be possible to directly use BED files produced with Galaxy.
+>Missing header in BAM files|2011/06/15
+Make sure you add the SAM header when creating your BAM file. If not, you'll get the following error message:<br><b>"The uploaded file or the archive did not contain required BED or BAM file."</b><br>
+<br>To add the header to the BAM file run samtools as follows: <br><b>samtools view -bS yourFile.sam > yourFile.bam</b>
+>Problems with mRNA-seq data|2011/06/09
+A number of users tried to run DARIO with data not produced by short RNA-seq protocols. Since our pipeline only 
+works for small RNAs (processing/degradation products of longer ncRNAs), we do not allow data sets with mapping loci longer than 50nt.
+>New error messages|2011/06/08
+We found that many uploaded BED-files are not in the format required by DARIO. We have therefore added
+new messages that indicate what is the exact problem within an uploaded BED file.
+>Problems with ZIP and TAR.GZ files|2011/06/01
+Today we had issues with uploaded files that were compressed with zip or tar.gz. 
+We have fixed the problem and apologize for the inconvenience. 
+>DARIO article published in Nucleic Acids Research|2011/05/30
+The article introducing DARIO has now appeared in the Webserver Issue of Nucleic Acids Research. 
+Click <a href="http://nar.oxfordjournals.org/cgi/content/full/gkr357?ijkey=ePITzdDcMAhmCgX&keytype=ref">here</a> 
+to view the open-access, full text version on the Journals website.
+>New Powerful Working Machine|2011/04/08
+We have set up a new, more powerful machine to process DARIO jobs. Depending on the load, up to 
+eight jobs can be processed in parallel. Computation time is now 50% faster than before! The hg18 
+test data now takes only about 13 minutes, compared to 25 minutes before. 
+>Test data for monkey and mouse available|2011/04/07
+We have added test data for rhesus monkey and mouse. It can be downloaded on the test data page, as well 
+automatically used for the computation. For the latter, select the respective reference 
+annotation on the "new job" page, and check "Use test-data".
+>New species added|2011/04/02
+We have added three more supported species to webservice: rhesus monkey (rheMac2), 
+mouse (mm9), and zebrafish (danRer6). Therefore there are now a total of seven annotations from 
+six species supported by DARIO.
+>BAM file support|2011/04/02
+You can now upload your mapped reads in the common BAM format. 
+>The first news|2011/04/02
+On this page you will find information on updates or changes to the DARIO web server.

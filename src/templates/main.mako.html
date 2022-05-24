@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>DARIO web server</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="${WEBPATH}/static/main.css" type="text/css">
+<link rel="stylesheet" href="${WEBPATH}/static/results.css" type="text/css">
+<script src="${WEBPATH}/static/main.js" type="text/javascript"></script>
+<script src="${WEBPATH}/static/sorttable.js" type="text/javascript"></script>
+
+</head><body>
+<div id="container">
+<div id="header">
+<div id="headerleft"><img src="${WEBPATH}/static/img/header_left.gif">
+</div>
+
+<div id="headerright">
+% if phase == 1:
+<img src="${WEBPATH}/static/img/header_right.gif">
+% elif phase == 2:
+<img src="${WEBPATH}/static/img/header_right_2.gif">
+% else:
+<img src="${WEBPATH}/static/img/header_right_3.gif">
+% endif
+
+</div>
+<div id="headermain"><b>DARIO</b> WebServer
+</div>
+
+</div>
+<div id="column2">
+<div id="contentmain">
+<div style="float:right;">
+<a href="${WEBPATH}">home</a> |
+<a href="${WEBPATH}/new_job">new job</a> |
+<a href="${WEBPATH}/news">news</a> |
+<a href="${WEBPATH}/help">help</a> 
+</div><br>
+
+
+${next.body()}
+
+
+</div>
+</div>
+<div id="footer">
+<div id="footerleft">&nbsp;</div>
+<div id="footerright">&nbsp;</div>
+<div id="footermain">
+ <div style="float:left;"><a href="/privacy">Privacy Statement</a>  | Contact: 
+ <a href='&#109;&#97;il&#116;o&#58;%64a%72i%&#54;F&#64;&#37;&#54;&#50;io&#37;69nf&#46;&#117;&#110;%6&#57;%2D%6C%&#54;&#53;i&#37;&#55;&#48;%&#55;A%&#54;&#57;g&#46;d&#101;'>dar&#105;&#111;&#64;bioinf&#46;&#117;ni&#45;leipzi&#103;&#46;d&#101;</a>
+</div></div>
+</div>
+</div>
+</body></html>
+

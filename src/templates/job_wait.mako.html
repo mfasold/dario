@@ -1,0 +1,27 @@
+<%inherit file="/main.mako.html"/>
+<div id="intermediate-container">
+<br>
+% if found != "":
+  <b> ${found} </b>
+<br>
+% endif
+
+<p>
+  Click <a href="javascript:addToFavorites('${pagelink}')">here</a> to
+  bookmark this page - it will forward you to the results as soon as they
+  are ready. Alternatively, leave this window open and wait. 
+</p>
+<p>
+  If you have provided an email address, you will be notified as soon as the
+  analysis is completed. A single
+  job currently takes up to 25 minutes to compute (without user
+  annotation), depending on the size and type of the uploaded data.
+</p>
+
+<p>This page will automatically reload every 30 seconds.</p>
+
+<script type="text/javascript">
+window.setTimeout("location.reload()", 30000);
+</script>
+
+</div>  

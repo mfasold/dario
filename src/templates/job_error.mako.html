@@ -1,0 +1,22 @@
+<div id="intermediate-container">
+<h3> An error occured during the computation.</h3>
+<p>
+<b> ${error_msg}</b>
+</p>
+% if len(error_pre) > 1:
+<br/>
+<p>
+The following run log may indicate details about the error:
+<pre class="log">
+${error_pre}
+</pre>
+</p>
+<br/>
+% endif
+
+<p>
+If you have any questions regarding your computation, please send us your input files together with
+the ID "${job_infos['hash']}" to the email adress below.
+</p>
+
+</div>  

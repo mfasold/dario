@@ -1,0 +1,61 @@
+<%inherit file="/main.mako.html"/>
+<script language="javascript" type="text/javascript" defer>
+<!--
+var species_with_testdata = ['Worm (ce6)', 'Human (hg18)', 'Fruit Fly (dm3)', 'Rhesus Monkey (rheMac2)', 'Mouse (mm9)'];
+// -->
+</script>
+
+<div id="intermediate-container">
+			<table > 
+				<form name="mtdb" action="upload" enctype="multipart/form-data" method="POST">
+
+ 					<tr><td>Reference Genome*:</td><td>
+					<select name="code" size="1">
+            <% available_species = ['Human (hg18)', 'Human (hg19)', 'Rhesus Monkey (rheMac2)', 'Mouse (mm9)', 'Mouse (mm10)', 'Fruit Fly (dm3)', 'Worm (ce6)', 'Zebrafish (danRer6)'] %>
+            % for s in available_species:
+						<option>${s}</option>
+            % endfor
+					</select></td></tr>
+
+					<tr> <td>BAM or BED file*:</td>
+          <td> <input type="file" name="coverage_file"> </td> 
+          </tr>
+
+					<tr> <td>User Annotation:</td>
+          <td> <input type="file" name="user_annotation_file"> </td> 
+          </tr>
+
+					<tr><td>Email:</td><td><input type="text" name="email" id="email"> </td></tr>
+          
+					<tr><td></td>
+
+          <td style="padding-top:14px;">
+					<input value="" name="proceed" class="proceed" onmouseover='this.style.cursor="pointer"' type="button" onclick="button01()">&nbsp;&nbsp;
+             
+            <span style="margin-left:35px;"> <small> Use test-data <input type="checkbox" name="use_test_data" /> </small><span>
+          </td></td></tr>
+				</form>
+			</table>
+      <br/>
+      <br/>
+      <small>
+      Please read about
+      the <a href="help#input">
+      input file format</a> requirements. Activating the "Use
+      test-data" check-box will start an analysis using test data for
+      the selected reference annotation. The list of available test
+      data for the supported organisms can be found
+      <a href="test_data">here</a>.
+      Or, you can take a look on
+      the <a href="example/result1/">results</a>
+      of the hg18 test data set.
+
+      <br/> <br/> Notes: The upload must not exceed 60MB in
+      size. Uploaded files may be in raw BAM or BED-format, or
+      compressed using .gz, .tar.gz and .zip. The file suffix in the
+      compressed archive must be either '.bed' or '.bam' to indicate
+      the used format.  Email is optional and allows you to receive a
+      notification as soon as the computation has finished.  <br/>
+      <br/> * = required field.
+      </small>
+</div>

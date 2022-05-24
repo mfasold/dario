@@ -1,0 +1,70 @@
+<%inherit file="/main.mako.html"/>
+<div id="result-content">
+    
+    <a href="http://hoffmann.bioinf.uni-leipzig.de" target="blank">
+        <img style="float:left; margin-left:10px; margin-right:40px; margin-top:5px; margin-bottom:20px;" src="static/img/hoffmann.png"/>
+    </a>
+    
+    <br>
+    <p style="color:#585858"><big>
+        <b><big>Welcome to DARIO</big></b>,<br> a free web server for the analysis of short RNAs from<br>
+        high throughput sequencing data.</big>
+    </p>
+
+    <br style="clear:both"/>
+       
+    <img style="float:right; margin-left:45px; margin-right:20px;" src="static/img/index_toplogo2.png"/>
+    <br>
+    <ul id="feature-list">
+        <li> <b>fast and convenient analysis</b> of small RNA-seq data</li>
+        <li> <b>no dependencies</b> to any sequencing platform or mapping
+            tool (convert from common SAM format)</li>
+        <li> <b>differential expression:</b> direct comparison  of expressions from several DARIO runs
+            due to RPM normalization </li>
+        <li> <b>upload of own annotations</b> or regions of interest</li>
+        <li> <b>prediction of new putative ncRNAs</b> using a machine learning approach</li>
+        <li> additional validation of predicted ncRNAs using <a href="http://www.tbi.univie.ac.at/~wash/RNAz/" target="blank">RNAz</a></li>
+    </ul>
+
+    <br style="clear:both"/>
+    
+    <div style="float:right; width:300px; margin-left:25px; margin-right:30px; margin-top:30px;">
+        <center>
+            <span> <b>Would you like a quick overview about how to use DARIO?</b> </span> <br/> 
+                <a href="static/tour/DARIO-Introduction.html" style="margin-top: 10px;">
+                    <img src="static/img/tour_button.png"/></a>
+                <br/>
+                <small> <a href="static/tour/DARIO-Tour.pdf">(Download PDF)</a></small>
+        </center>
+    </div>
+
+    <br/>
+    <b>Any Questions?</b>
+
+    The <a href="help">help-page</a> includes the <br/> following sections:
+    <ol>
+        <li> <a href="help#intro"> Introduction</a></li>
+        <li> <a href="help#analysis"> Analysis and Prediction </a>  </li>
+        <li> <a href="help#input"> Input Data Format </a>  </li>
+        <li> <a href="help#output"> Output  </a>  </li>
+        <li> <a href="help#faq"> FAQ </a> </li>
+    </ol>
+
+    Examplar results and test data is available <a href="test_data">here</a>.
+
+
+    <br/> <br/> <br/>
+    <p><center>
+        <b> <a href="/new_job"> CLICK
+            HERE TO START A NEW ANALYSIS JOB</a>
+        </b></center>
+    </p>
+    <br/><br/> 
+    <center>
+        <div id="affiliations">
+            <img src="static/img/esf-logo.png"/>
+        </div>
+    </center>
+    
+    <br/>
+</div> 

@@ -1,0 +1,28 @@
+<%inherit file="/main.mako.html"/>
+<div id="blog-container">
+
+% for header, text in entries:
+
+<% header_parts = header.split("|") %>
+<% title = header_parts[0] %>
+<% publish_date = header_parts[1] %>
+
+<div class="section">
+<div class="blog-header">
+<h3> ${title}</h3>
+<h4>${publish_date}</h4>
+</div>
+
+<div class="section-content">
+
+<p>
+${text}
+</p>
+
+</div>
+</div>
+
+% endfor
+
+
+</div>

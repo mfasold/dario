@@ -1,0 +1,72 @@
+<%inherit file="/main.mako.html"/>
+<div id="main-content">
+<a href="Javascript:history.go(-1);" style="float:right;"> Go Back </a>
+
+<div class="section">
+<div class="section-header">
+<h3> Expression of ncRNA: ${ncrna_type} </h3>
+</div>
+
+<div class="section-content" class="sortable">
+
+<p>
+${ncrna_type} expression sorted with location. Click the header to
+sort the table with respect to another column. Click twice to reverse
+sort order.
+<p>
+
+
+<table id="box-table-a" class="sortable">
+  <colgroup>  
+    <col class="vzebra-odd">  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd" >  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd">  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd">  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd">  
+  </colgroup>  
+
+  <thead>
+    <tr>
+      <th scope="col"> Chromosome </th>
+      <th scope="col"> Start Loci </th>
+      <th scope="col"> End Loci</th>
+      <th scope="col"> Strand</th>
+      <th scope="col"> ID </th>
+
+      <th scope="col"> RPM </th>
+      <th scope="col"> Reads </th>
+      <th scope="col"> Reads (normalized) </th>
+      <th scope="col"> Visualization </th>
+    </tr>
+  </thead>
+  <tbody>
+
+% for row in ncrna_expression:
+    <tr>
+      <td> ${row[0]} </td> 
+      <td> ${row[1]} </td>
+      <td> ${row[2]} </td>
+      <td> ${row[5]} </td>
+      <td> ${row[3]} </td>
+
+      <td> ${row[7]} </td>
+      <td> ${row[8]} </td>
+      <td> ${row[9]} </td>
+      <td> <a href="${row[10]}" TARGET="_blank"> View at UCSC </a> </td>    
+    </tr>
+% endfor
+
+ </tbody>
+</table>
+
+</div>
+</div>
+
+<a href="Javascript:history.go(-1);" style="float:right;"> Go Back </a>
+<br/>
+
+</div>

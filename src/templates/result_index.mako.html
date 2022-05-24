@@ -1,0 +1,335 @@
+<%inherit file="/main.mako.html"/>
+<div id="result-content">
+
+<div class="section">
+
+<div class="section-header">
+<h3> Summary </h3>
+</div>
+
+<div class="section-content">
+
+<table id="summary-matrix">
+  <tbody>
+    <tr>
+      <td> Job received at</td>
+      <td> ${job_infos['job_received_at']} </td>
+    </tr>
+    <tr>
+      <td> Job finished at</td>
+      <td> ${job_infos['job_finish_time']}</td>
+    </tr>
+    <tr>
+      <td> Uploaded file name</td>
+      <td> ${job_infos['filename']}</td>
+    </tr>
+    <tr>
+      <td> Reference Annotation </td>
+      <td> ${job_infos['code']}</td>
+    </tr>
+    <tr>
+      <td> # of uploaded mapping loci </td>
+      <td> ${analysis['entries']} </td>
+    </tr>
+    <tr>
+      <td> Total # of reads </td>
+      <td> ${analysis['reads']} </td>
+    </tr>
+    <tr>
+      <td> Total # of tags </td>
+      <td> ${analysis['tags']} </td>
+    </tr>
+ </tbody>
+</table>
+
+<p>
+  Click <a href="javascript:addToFavorites('${analysis['results_dir']}')">here</a>
+  to bookmark this page for reference. This result will be available
+  online at least 2 weeks from your jobs finish time.
+</p>
+
+<p>
+You will find all downloadable files at the end of this page.
+</p> 
+
+</div>
+</div>
+
+<br style="clear:both"/>
+
+<div class="section">
+
+<div class="section-header">
+<h3> Quality Control</h3>
+</div>
+
+<div class="section-content">
+<p>
+The following figures indicate whether problems might have occured
+during sample or library preparation.
+</p>
+
+<table class="image1">
+  <tbody>
+    <tr>
+      <td> <a href="ReadLengthHistogram.big.png"> <img src="ReadLengthHistogram.small.png" />  </a> </td>
+      <td> <a href="MultipleMappingsHistogram.big.png"> <img src="MultipleMappingsHistogram.small.png"/>  </a> </td>
+    </tr>
+    <tr>
+      <td class="caption">Read Length Distribution</td>
+      <td class="caption">Multiple Mappings Distribution</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="image1">
+  <tbody>
+    <tr>
+      <td> <a href="ReadMappingsOverview1.big.png"> <img src="ReadMappingsOverview1.small.png" />  </a></td>
+      <td> <a href="ReadMappingsOverview2.big.png"> <img src="ReadMappingsOverview2.small.png" />  </a></td>
+    </tr>
+    <tr>
+      <td class="caption">Read fractions mapping into genes</td>
+      <td class="caption">Read fractions mapping into ncRNAs</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>
+</div>
+
+
+<div class="section">
+<div class="section-header">
+<h3> Analysis </h3>
+</div>
+
+<div class="section-content">
+
+<p>
+This table summarizes the quantification of of the different
+ncRNA classes. Click on "View List" for detailed information for
+individual ncRNA species.
+</p>
+
+<table id="box-table-a">
+  <colgroup>  
+    <col class="vzebra-odd">  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd" >  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd">  
+  </colgroup>  
+  <thead>
+    <tr>
+      <th scope="col"> ncRNA Class </th>
+      <th scope="col"> Reads </th>
+      <th scope="col"> Reads (normalized) </th>
+      <th scope="col"> # of Genes </th>
+      <th scope="col"> Table </th>
+    </tr>
+  </thead>
+  <tbody>
+    % for row in analysis['ncrna_expression']:
+    <%     ncrna_type = row[0] %>
+    <tr>
+      <td> ${ncrna_type} </td>
+      <td> ${row[2]} </td>
+      <td> ${row[3]} </td>
+      <td> ${row[1]} </td>
+      <td> <a href="ncRNA_table_${ncrna_type}.html"> View List </a> </td>    
+    </tr>
+    % endfor
+
+ </tbody>
+</table>
+
+</div>
+</div>
+
+
+<div class="section">
+
+<div class="section-header">
+<h3>Predictions</h3>
+</div>
+
+<div class="section-content">
+
+% if job_infos['prediction_succesful'] == "1":
+<p>
+ncRNAs patterns were identified using <a href="http://www.bioinf.uni-leipzig.de/~david/LIFE/LIFE/blockbuster.html" target="blank">
+blockbuster </a>. Random forest classification was performed
+using <a href="http://www.cs.waikato.ac.nz/ml/weka/" target="blank">WEKA</a>
+software. The used machine learning approach is published and can be looked up <a href="http://eproceedings.worldscinet.com/9789814295291/9789814295291_0010.html" target="blank">here</a>.
+</p>
+
+% if 'classifier' in analysis:
+<p> General classifcation statistics:
+</p>
+
+<table class="image1">
+  <tbody>
+    <tr>
+      <td> <a href="ClassificationOverview.big.png"> <img src="ClassificationOverview.small.png" /> </a> </td>
+      <td> 
+
+### START INSERT OF TABLE INTO IMAGE CELL
+<table id="confusion-matrix">
+  <thead>
+    <tr>
+      <th scope="col"> </th>
+      <% classifier = analysis['classifier'] %>      
+      % for ncrna in classifier['ncrna_classes']:
+      <th scope="col"> ${ncrna} </th>
+      % endfor
+    </tr>
+  </thead>
+  <tbody>
+    <% ncrna_count = len(classifier['ncrna_classes']) %>          
+    % for row in range(0,ncrna_count):
+    <tr>
+      <td> ${classifier['ncrna_classes'][row]} </td>
+      % for col in range(0,ncrna_count):
+      <td> ${classifier['confusion_matrix'][row][col]} </td>
+      % endfor
+    </tr>
+    % endfor
+ </tbody>
+  <caption>Confusion Matrix</caption>
+</table>
+### END INSERT OF TABLE INTO IMAGE CELL
+</td>
+    </tr>
+###    <tr>
+###      <td class="caption">Overview of Cross-Validation</td>
+###      <td class="caption">Detailed Cross-Validation</td>
+###    </tr>
+  </tbody>
+</table>
+
+% else:
+<p> Sorry, no classifier statistics available!
+</p>
+% endif
+
+<p>
+These new putative ncRNAs were predicted within your data.
+</p>
+
+
+<table id="box-table-a">
+  <colgroup>  
+    <col class="vzebra-odd">  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd" >  
+  </colgroup>  
+  <thead>
+    <tr>
+      <th scope="col"> ncRNA Class </th>
+      <th scope="col"> # of Genes </th>
+      <th scope="col"> Table </th>
+    </tr>
+  </thead>
+  <tbody>
+    % for row in analysis['predictions']:
+    <%     ncrna_type = row[0] %>
+    <tr>
+      <td> ${ncrna_type} </td>
+      <td> ${row[1]} </td>
+      <td> <a href="predictions_table_${ncrna_type}.html"> View List </a> </td>    
+    </tr>
+    % endfor
+
+ </tbody>
+</table>
+
+</div>
+</div>
+% else:
+<p> Prediction of new ncRNAs failed. </p>
+% endif
+
+
+
+% if job_infos['user_annotation_succesful'] == "1":
+<div class="section">
+
+<div class="section-header">
+<h3> User Annotation</h3>
+</div>
+
+<div class="section-content">
+
+<p>
+You have provided additional annotation
+(${job_infos['user_annotation']}). The following table shows
+expression of those.
+</p>
+
+<table id="box-table-a">
+  <colgroup>  
+    <col class="vzebra-odd">  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd" >  
+    <col class="vzebra-even">  
+    <col class="vzebra-odd">  
+  </colgroup>  
+  <thead>
+    <tr>
+      <th scope="col"> Class Identifier </th>
+      <th scope="col"> # of Genes </th>
+      <th scope="col"> Table </th>
+    </tr>
+  </thead>
+  <tbody>
+    % for row in analysis['user_annotation']:
+    <%     ncrna_type = row[0] %>
+    <tr>
+      <td> ${ncrna_type} </td>
+      <td> ${row[1]} </td>
+      <td> <a href="user_annotation_table_${ncrna_type}.html"> View List </a> </td>    
+    </tr>
+    % endfor
+
+ </tbody>
+</table>
+
+
+</div>
+</div>
+% endif
+
+
+<div class="section">
+
+<div class="section-header">
+<h3>Download</h3>
+</div>
+
+<div class="section-content">
+
+<p>
+The following results are available in BED-file format:
+<ul>
+<li> <a href="ncRNA.expression.bed"> ncRNA Expressions BED </a> </li>
+% if job_infos['prediction_succesful'] == "1":
+<li> <a href="predictions.expression.bed"> Predictions BED </a> </li>
+% endif
+% if job_infos['user_annotation_succesful'] == "1":
+<li> <a href="user_annotation.expression.bed"> User Annotation
+    Expression BED </a> </li>
+% endif
+</ul>
+
+Alternatively, you can download <a href="dario_results.zip">this zip-archive </a> containing all result tables and images.
+</p>
+
+</div>
+</div>
+
+
+
+
+</div>

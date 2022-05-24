@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="description" content="DARIO Web Server A free web server for the analysis of short RNAs from high throughput sequencing data sequencing data  Sequencing Experiment and its results Illumina Genome Analyzer IIx  (http://www.illumina.com)   @HWI-EAS385:1:1:147:1370#0/1TAGTTTATAAGACTGATGTTNATGGTNTGACGTCNTCTGCT+HWI-EAS385:1:1:147:1370#0/1QNT\^ab[T[TT`b\\b]Y[D][D]]D][F^ab]D^ba^a]@HWI-EAS385:1:1:147:462#0/1TAGCTTATAAGACTGATGATNATCGTNTGACGTCNTCTGCT+HWI-EAS385:1:1:147:462#0/1RT^bWbb]N]bb\a^^Y[D^DW[K]YD[YN^Zb]D^ba[_]... Sequence small RNAs using a sequencing machine of your choice.   The result will be a list of sequenced RNA molecules (reads) in a sequencer specific output file (typically in fastq format). example output in fastq format  Map reads to a reference genome @HD	VN:1.0@SQ	SN:chrI	LN:15072421@SQ	SN:chrII	LN:15279323@SQ	SN:chrIII	LN:13783681@SQ	SN:chrIV	LN:17493785@SQ	SN:chrV	LN:20919568@SQ	SN:chrX	LN:17718854@PG	ID:segemehl	VN:0.9.4-$Rev: 162 $ ($Date: 2010-10-15 12:48:37 +0200 (Fri, 15 Oct 2010) $)GPL9269_GSM427346_GSE17153_102271	0	chrI	15070506	255	31M1D1M	*	0	0	ATTCTTAGTTGGTTGAGCGAT	*	NM:i:4	MD:Z	XN:i:1GPL9269_GSM427346_GSE17153_102271	0	chrI	15063309	255	31M1D1M	*	0	0	ATTCTTAGTTGGTTGAGCGAT	*	NM:i:4	MD:Z	XN:i:1GPL9269_GSM427346_GSE17153_384015	0	chrIV	3233310	255	21M	*	0	0	TGAGATCGTTCAGTACGGCAA	*	NM:i:0	MD:Z:21	XN:i:1GPL9269_GSM427346_GSE17153_384015	0	chrIV	3233310	255	21M	*	0	0	TGAGATCGTTCAGTACGGCAA	*	NM:i:0	MD:Z:21	XN:i:1GPL9269_GSM427346_GSE17153_384015	0	chrIV	3233310	255	21M	*	0	0	TGAGATCGTTCAGTACGGCAA	*	NM:i:0	MD:Z:21	XN:i:1...  Freely choose one of your favorite mapping tools to map your data to a reference genome. For example:  segemehl BWA Bowtie SOAP ... example output in sam format  Prepare your mapped reads for the dario upload [user]$ perl map2bed.pl Automatically convert the output to the needed bed format using map2bed.pl. Optionally you can create the bed file yourself.   map2bed.pl will not only create a bed formatted file, but also merge mapped reads to tags and zip the output file. This will minimize the file size, resulting in a short upload time.  (Note: It might be necessary to explicitly select 'SAM format' as output format when running your mapping tool.)  UPLoad your data to the dario webserver Open the DARIO WebServer http://dario.bioinf.uni-leipzig.de Click on CLICK HERE TO START A NEW ANALYSIS JOB Choose your reference species Choose upload file Optionally: choose a list of your own loci of interest Optionally: specify an e-mail address Click Proceed  wait a minute... The job is automatically added to a queue and starts as soon as possible.  This page reloads every 30 sec and opens the result page when the job is done. If you specified your e-mail address, you will get an e-mail with a link to the result page, as soon as the job is finished.  ...done  After ~10 to 25 minutes running time the result page is generated, containing the following sections: Summary Quality Control Analysis Prediction User Annotation Download  Summary The Summary contains some basic information about the job, e.g.: The date and time you uploaded your file The number of mapped loci you uploaded  The number of reads and the number of tags* *A tag is deﬁned as a RNA sequence that occurs at least once in a set of sequencer reads. Thus a tag typically corresponds to several identical reads.  Quality control The Quality Control gives a first impression on how good your experiment performed.  Quality controlread length distribution Read Length Distribution  Here, you can easily assess if the short read sequencing experiment performed properly. When using a short RNA preparation protocol, one would expect a peak at the length of 22.  Quality controlMultiple Mappings distribution Multiple Mappings Distribution Most of the reads should map to a unique position within the reference genome. If this plot gives any doubt to this statement, you should have a deeper look on the quality values of your experiment.  Quality controlMapping regions within the genome Mapping Region This plot shows the fraction of reads mapping to exons, introns, ncRNAs or not-annotated regions. The majority of the reads should map to annotated ncRNAs, if a short RNA protocol was used.  Quality controlreads mapping to non-coding RNA loci ncRNA Overlap This picture gives an overview of the overall ncRNA expression in the experiment. Typically, miRNAs are the majority.  analysis The tables in the analysis section are itemized by the types of ncRNAs.   Analysisexample: microRNAs In the expression lists contains: the ncRNA loci (chromosomal position) the ncRNA ID the number of reads overlap with the loci  the number of overlapping reads, normalized for multiple mappings the RPM (Reads Per Million) normalized expression for each expressed ncRNA   Analysisexample: microRNAs  Click View at UCSC to be forwarded to the UCSC Genome Browser showing the region of the ncRNA. Take a look on the expression pattern.   Prediction The upper part gives information about the sensitivity of the predictions on the uploaded dataset. Below the predicted loci are shown.  Short RNA reads map to ncRNAs forming specific patterns (Langenberger et al.).  This is best known for miRNA, where the reads form high stacks right above the annotated mature and the mature* loci.           PredictionThe idea read pattern for hsa-mir-204 in the UCSC genome Browser read pattern on the folded microRNA  Other classes of ncRNAs show different expression patterns:   PredictionThe idea  Different features are used to separate the classes, using a RandomForest classifier:   PredictionThe idea  New ncRNAs candidates are identified in the uploaded data and ranked by their scores.           Futhermore, we overlap the predicted loci with RNAz screens. RNAz uses conservation and secondary structure properties to predict regions likely to form functional RNA structures.  PredictionThe output  Currently unknown microRNA candidates predicted by DARIO: PredictionThe examples new candidate within an annotated intron of a gene new candidate in intergenic region new candidate antisense to an annotated miRNA  USer annotation The output is in the same format as the analysis with the user defined annotations instead of the known ncRNA loci. If you have not uploaded an annotation file, there will be no User Annotation section on the result page.  Download Of course all the expression data and predicted candidates DARIO calculated are downloadable in bed format.  It is possible to use the predicted ncRNA candidates as User Annotation in upcoming DARIO runs.   We hope that you will enjoy working with DARIO!  Dario is a cooperative project of  David Langenberger  and  Mario Fasold"/>
+    <title></title>
+    <script type="text/javascript" language="javascript">
+//      <![CDATA[
+            var images = new Array (25);
+            images[0] = "DARIO-Introduction_files/DARIO-Introduction.001-001.jpg";
+            images[1] = "DARIO-Introduction_files/DARIO-Introduction.002-001.jpg";
+            images[2] = "DARIO-Introduction_files/DARIO-Introduction.003-001.jpg";
+            images[3] = "DARIO-Introduction_files/DARIO-Introduction.004-001.jpg";
+            images[4] = "DARIO-Introduction_files/DARIO-Introduction.005-001.jpg";
+            images[5] = "DARIO-Introduction_files/DARIO-Introduction.006-001.jpg";
+            images[6] = "DARIO-Introduction_files/DARIO-Introduction.007-001.jpg";
+            images[7] = "DARIO-Introduction_files/DARIO-Introduction.008-001.jpg";
+            images[8] = "DARIO-Introduction_files/DARIO-Introduction.009-001.jpg";
+            images[9] = "DARIO-Introduction_files/DARIO-Introduction.010-001.jpg";
+            images[10] = "DARIO-Introduction_files/DARIO-Introduction.011-001.jpg";
+            images[11] = "DARIO-Introduction_files/DARIO-Introduction.012-001.jpg";
+            images[12] = "DARIO-Introduction_files/DARIO-Introduction.013-001.jpg";
+            images[13] = "DARIO-Introduction_files/DARIO-Introduction.014-001.jpg";
+            images[14] = "DARIO-Introduction_files/DARIO-Introduction.015-001.jpg";
+            images[15] = "DARIO-Introduction_files/DARIO-Introduction.016-001.jpg";
+            images[16] = "DARIO-Introduction_files/DARIO-Introduction.017-001.jpg";
+            images[17] = "DARIO-Introduction_files/DARIO-Introduction.018-001.jpg";
+            images[18] = "DARIO-Introduction_files/DARIO-Introduction.019-001.jpg";
+            images[19] = "DARIO-Introduction_files/DARIO-Introduction.020-001.jpg";
+            images[20] = "DARIO-Introduction_files/DARIO-Introduction.021-001.jpg";
+            images[21] = "DARIO-Introduction_files/DARIO-Introduction.022-001.jpg";
+            images[22] = "DARIO-Introduction_files/DARIO-Introduction.023-001.jpg";
+            images[23] = "DARIO-Introduction_files/DARIO-Introduction.024-001.jpg";
+            images[24] = "DARIO-Introduction_files/DARIO-Introduction.025-001.jpg";
+            var index = 0;
+            function WindowLoaded(evt)
+            {
+                document.body.onselectstart = function () { return false; };
+            }
+            function Step(i)
+            {
+                GoTo(index + i)
+            }
+            function GoTo(newIndex)
+            {
+                if(newIndex >= 0 && newIndex < images.length)
+                {
+                    index = newIndex;
+                    document.Slideshow.src = images[index];
+                }
+            }
+//      ]]>
+    </script>
+</head>
+<body bgcolor="#585858" onload='WindowLoaded(event);'>
+    <p align="center">
+        <br/>
+        <br/>
+        <img name="Slideshow" alt="" src="DARIO-Introduction_files/DARIO-Introduction.001-001.jpg" onclick="Step(1)"/>
+        <br/>
+        <br/>
+        <input type="image" src="DARIO-Introduction_files/home.png" onclick="GoTo(0)"/>
+        &nbsp;&nbsp;&nbsp;
+        <input type="image" src="DARIO-Introduction_files/prev.png" onclick="Step(-1)"/>
+        <input type="image" src="DARIO-Introduction_files/next.png" onclick="Step(1)"/>
+    </p>
+</body>
+</html>

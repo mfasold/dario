@@ -1,0 +1,351 @@
+<%inherit file="/main.mako.html"/>
+<div id="result-content">
+
+<div class="section">
+<div class="section-header">
+<h3> Introduction </h3>
+<a name="intro"></a> 
+</div>
+
+
+<div class="section-content">
+<p>
+  Current methods for high throughput sequencing (HTS) for the first time offer the 
+  opportunity to investigate the entire ncRNAome in an essentially unbiased way.
+  Here we present a web service called 'DARIO'
+  that helps researchers to study short read
+  sequencing libraries in a
+  platform independent way and predict new ncRNAs. 
+  Small noncoding RNAs, including microRNAs, snoRNAs and tRNAs, represent a diverse 
+  collection of molecules with several important biological functions. Exploring 
+  small RNA biology or characterizing differential expression profiles by 
+  sequencing and comparing small RNA transcriptomes is also an exciting possibility 
+  to get more and deeper information about the world of non-coding RNAos
+  (ncRNAs).
+</p> 
+
+</div>
+</div>
+
+
+
+<div class="section">
+<div class="section-header">
+<h3> Analysis and Prediction</h3>
+<a name="analysis"></a> 
+</div>
+
+<div class="section-content">
+
+<p>
+DARIO is a free web-server tool for the processing of small-RNAs data
+  obtained from next generation sequencing techniques such as the
+  Genome Analyzer of Illumina Inc. or Genome SequencerTM FLX (454 Life
+  ScienceTM and Roche Applied Science). The input data are mapping
+  positions of already mapped sequence reads stored in a bed-formatted
+  file. Then, the tool performs several analysis steps and outputs
+  detailed results. The analysis steps are the following:
+
+<div class="rightimg"><img src="static/img/flowchart.jpg" width="420"/></div>
+
+  <ol id="results-list">
+    <li align="justify"> <b>First analysis of the uploaded mapping file (Quality
+    control).</b> <br>Here, the user gets a detailed analysis of the uploaded
+    file (number of reads, number of tags, multiple mappings, read
+    length distribution), as well as nice graphics showing where the
+    reads mapped to (introns, exons, intergenic regions). This will
+    help to evaluate the uploaded experiment.
+    </li>
+
+    <li align="justify"><b>Expression analysis of annotated ncRNAs.</b> <br>In this step, the
+    user will get a detailed analysis of the expression of already
+    annotated genes. Since the expression values are normalized based
+    on the number of mappable reads, the expression values are
+    completely comparable with results of previous DARIO runs
+    (differential expression). Furthermore, the user gets gets a link
+    to the UCSC genome browser where he can take a look at the
+    expression pattern.
+    </li>
+    <li align="justify"><b>Classification of previously unknown ncRNAs.</b> <br>A set of new
+    ncRNA candidates for miRNAs, snoRNAs and tRNAs is
+    predicted. Furthermore, an overlap with well-known RNAz is
+    computed to strengthen the result of real positives. The user gets
+    an easy to use list with expression values of the new candidates,
+    as well as the UCSC genome browser link, to see how the
+    predictions look like.
+    </li>
+    <li align="justify">
+    <b>Expression analysis of user defined loci.</b> <br>If the user
+    decided to upload a set with new loci, these positions will be
+    treated like ncRNA loci and a similar table with all the usefull
+    informations will be generated. OF course, this table can also be
+    downloaded.
+    </li>
+  </ul> 
+</p>
+</div>
+</div>
+
+<div class="section">
+<div class="section-header">
+<h3> Input Format </h3>
+<a name="input"></a> 
+</div>
+
+<div class="section-content">
+<p>
+DARIO requires mapped reads/tags and/or the user annoated loci stored
+in the <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">bed
+    format</a> as input. Note that we only support data originating from experiments 
+prepared with the short RNA-seq protocol and thus predominantly covers read lengths of about 22-24nt.
+</p>
+<h4>Mapped Reads/Tags</h4>
+<p>
+The mapped reads have to be in the following format:
+<pre><code>
+#chr    start   end     id              nb of sequenced reads      strand
+chr1    20229   20366   GSM34290_325    50                         +
+chr1    1092347 1092441 GSM34290_326    3                          +
+</code></pre>
+<b>Notice:</b> To avoid big file sizes, it is advised to map tags (unique set of sequences), instead of all reads.
+The number of times each tag was sequenced has to be stored in the "nb of sequenced reads" field of the bed file.
+</p>
+<h4>User Annotations</h4>
+<p>
+If you want to upload your own annotation file or a file with some interesting locations,
+you have to create a bed file (filename must have correct suffix like .bed or bed.gz) with the following columns:
+<pre><code>
+#chr    start   end     id              score   strand  type    source
+chr1    20229   20366   hsa-mir-1302-2  0       +       miRNA   miRBase_v16
+chr1    1092347 1092441 hsa-mir-200b    0       +       miRNA   miRBase_v16
+...
+</code></pre>
+</p>
+
+<h4> Mapping Tools and List of Supported Reference Genomes  </h4>
+<p>
+As a first step, the sequenced reads must be mapped to a reference
+genome, using tools like:
+<ul id="mapping-tools">
+<li><a href="http://hoffmann.bioinf.uni-leipzig.de/LIFE/segemehl.html" target="blank">segemehl</a></li>
+<li><a href="http://bowtie-bio.sourceforge.net/index.shtml" target="blank">Bowtie</a></li>
+<li><a href="http://bio-bwa.sourceforge.net/" target="blank">BWA</a></li>
+<li><a href="http://maq.sourceforge.net/" target="blank">Maq</a></li>
+<li><a href="http://soap.genomics.org.cn/" target="blank">SOAP</a></li>
+<li>...</li>
+</ul>
+</p>
+<p>
+DARIO supports the following assemblies as reference genomes:
+<ul id="assemblies">
+<li><a href="http://hgdownload.cse.ucsc.edu/downloads.html#human" target="blank">H. sapiens (hg19)</a></li>
+<li><a href="http://hgdownload.cse.ucsc.edu/downloads.html#human" target="blank">H. sapiens (hg18)</a></li>
+<li><a href="http://hgdownload.cse.ucsc.edu/downloads.html#c_elegans" target="blank">C. elegans (ce6)</a></li>
+<li><a href="http://hgdownload.cse.ucsc.edu/downloads.html#fruitfly" target="blank">D. melanogaster (dm3)</a></li>
+</ul>
+</p>
+
+<h4> Converting mapping results into BED file format </h4>
+<a name="convert2BED"></a> 
+<p>
+To convert the output of your read mapper to the bed format, you can
+use
+our <a href="static/map2bed.pl">map2bed.pl</a>
+script. This script will not only create a bed formatted file, but
+also merge mapped reads to tags and try to pack the output file. This
+way, the file size will be minimized as much as possible. (Note: It might be necessary to explicitly select 'SAM
+format' as output format when running your mapping tool). The SAM file <strong>must</strong> contain header information.
+</p>
+
+<p>
+SAM format (output from segemehl, Bowtie, BWA, ...):<br>
+<code> perl map2bed.pl -i mapping.sam -f 1 -o upload.bed</code><br/><br/>
+SOAP format (output from SOAP):<br>
+<code> perl map2bed.pl -i mapping.soap -f 2 -o upload.bed</code><br/>
+</p> 
+
+<h4> Example BED files </h4>
+<a name="exampleBED"></a> 
+<p>
+Example BED-files containing previously mapped reads can be found on <a href="test_data">this page</a>.
+</p> 
+
+<h4> Converting mapping results into BAM file format </h4>
+<a name="convert2BAM"></a>
+<p>
+To convert the output of your read mapper to the BAM format, you can
+use <a href="http://samtools.sourceforge.net/" target=blank>samtools</a>. <br>Assure that the output format of your mapping tool
+is the SAM format and call <a href="http://samtools.sourceforge.net/" target=blank>samtools</a> as follows:<br>
+<code>samtools view -bS yourFile.sam > yourFile.bam</code><br>
+<b>NOTICE:</b> You have to call samtools with the -S parameter, otherwise you will loose the header information of the SAM file, which is mandatory for our calculations!
+</p>
+
+</div>
+</div>
+
+
+<div class="section">
+<div class="section-header">
+<h3> Output/Result </h3>
+<a name="output"></a> 
+</div>
+
+<div class="section-content">
+
+<p>
+You might want to inspect these hg18 <a href="example/result1" target="blank">example results</a>.
+Also consider to take a look into
+the <a href="static/tour/DARIO-Tour.pdf">DARIO Tour (PDF)</a>
+which gives detailed information about the DARIO usage and the output.
+</p> 
+
+<p>
+<b>SUMMARY</b><br>
+In the summary section you will get informations like the start date/time of you job, how many entries your
+bed-file has, the number of reads in you file (# of different ids) and the number of tags (# of unique ids).
+<br><br>
+
+
+<br>
+<b>QUALITY CONTROL</b><br>
+The quality control will give you a small summary of simple figures that will give you a first impression,
+if and how good your experiment performed.<br>
+<br>
+<br>
+
+<table>
+<tr> <td>
+<div class="rightimg">
+<img src="static/example/ReadLengthHistogram.big.png" width="200"/>
+</div>
+<b>Read length distribution</b><br>
+This plot shows you the read length on the x-axis and the amount of reads on the y-axis.
+Based on the read length distribution, the user can easily see, if the short read sequencing experiment
+performed properly. When using a short RNA preparation protocol, one would expect a peak at the length of
+22.
+<br>
+</tr> </td>
+<tr> <td>
+
+<div class="leftimg">
+<img src="static/example/MultipleMappingsHistogram.big.png" width="200"/>
+</div>
+<b>Multiple mapping positions of the reads</b><br>
+This plot shows you the number of multiple mappings on the y-axis and the amount of reads on the x-axis.
+Most of your reads should map to a unique position within your genome. If this plot gives any doubt to this 
+statement, you should have a deeper look on the quality values of your experiment.
+<br>
+</tr> </td>
+<tr> <td>
+
+<div class="rightimg">
+<img src="static/example/ReadMappingsOverview1.big.png" width="200"/> 
+</div>
+<b>Mapping region within the genome</b><br>
+This plot shows you the fraction of reads that map to exons, introns, ncRNAs or not-annotated regions.
+The majority of the reads come from annotated ncRNAs. This picture is typical for a short RNA protocol.
+<br>
+</tr> </td>
+<tr> <td>
+
+<div class="leftimg">
+<img src="static/example/ReadMappingsOverview2.big.png" width="250"/>
+</div>
+<b>Reads mapping to ncRNA loci</b><br>
+This picture gives you a feeling of the ncRNAs which are expressed in your experiment. miRNAs should 
+be the majority here.
+<br>
+</tr> </td>
+<tr> <td>
+</table>
+
+<br>
+<b>ANALYSIS</b><br> In the main analysis reads are overlapped with
+annotated ncRNAs (miRBase, tRNAscan, snoRNAdb, etc.) and a list of
+expressed ncRNAs, itemized by ncRNA classes, is generated.  You will
+find information like the number of reads mapping to annotated ncRNA
+loci and the normalized number of reads. To allow subsequent
+differential expression analysis, transcript measures are normalized
+based on their multiple mappings and the absolute number of mappable
+reads (RPM, Reads Per Million).
+<br><br>
+
+
+<br>
+<b>PREDICTION</b><br> For the prediction we use
+a <a href="http://eproceedings.worldscinet.com/9789814295291/9789814295291_0010.html"
+target="blank">previously published </a> machine learning
+approach. Each class of ncRNA exhibits a chracteristic read pattern,
+which this method relies on to identify and classify new ncRNA
+candidates. For each candidate, a prediction score is given as well as
+a RNAz classification, if available. The tables of these candidates
+look similar to the expression tables of the annotated ncRNAs. 
+<br><br>
+The <a href="static/tour/DARIO-Tour.pdf">DARIO Tour (PDF)</a>
+also describes both analysis and prediction results.
+<br><br>
+
+<!--
+<br>
+<b>USER ANNOTATION</b><br>
+Here can the user take a look at the expression of the  user defined loci.
+<br><br>
+
+
+<br>
+<b>DOWNLOAD</b><br>
+All the tables with the expression values and all other information calculated can be downloaded here for
+further analysis.
+<br><br>
+
+-->
+
+</p> 
+</div>
+</div>
+
+
+
+
+<div class="section">
+  <div class="section-header">
+    <h3> FAQ </h3>
+    <a name="faq"></a> 
+  </div>
+  <div class="section-content">
+    <h4>Should I allow multiple mappings when mapping the reads to the reference genome?</h4>
+    <p>
+      Yes, we recommend to allow multiple mappings. Several microRNAs
+      belong to microRNA families which have the same mature microRNA
+      sequence. If you ignore these mature sequences in the mapping
+      step, you might get misleading read patterns and 'expression'
+      levels of these microRNAs. Furthermore, tRNAs are known to occur
+      in multiple copies, sharing the same sequence and thus the same
+      reads mapping to it. These multiple copies would be missed when
+      only allowing uniquely mapped reads.
+    </p>    
+    <p>
+      DARIO normalizes the read expression of reads mapping to multiple
+      loci in the reference genome by dividing them by the
+      number of mappings. 
+    </p>
+
+    <h4>Will there be the possibility to upload raw reads to mapped automatically?</h4>
+    <p>
+      We are currently exploring the computational feasability of automatic mapping
+      using our in-house aligner SEGEMEHL.
+    </p>
+
+    <h4>How to cite DARIO?</h4>
+    <p>
+      If you use DARIO for your research, please cite the following article: <br/>
+      <i>DARIO: a ncRNA detection and analysis tool for next-generation sequencing experiments</i>
+      Mario Fasold; David Langenberger; Hans Binder; Peter F. Stadler; Steve Hoffmann.
+      Nucleic Acids Research 2011; doi: 10.1093/nar/gkr357
+    </p>
+  </div>
+</div>
+
+
+<br/>
+</div> 
