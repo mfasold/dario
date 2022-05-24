@@ -1,0 +1,8 @@
+job_received_at	2014-10-30 16:36:30
+code	Fruit Fly (dm3)
+hash	1c9c31d60173a3ce99540a7df08426eb
+name	NONE
+user_annotation	NONE
+total_upload_size	661
+email	dario@bioinf.uni-leipzig.de
+filename	dm3.GSE17153.bed.gz
