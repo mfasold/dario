@@ -97,7 +97,7 @@ def upload_file():
 
             email = form.get("email")
             species_code = form.get("code")
-            coverage_file = request.files["coverage_file"]
+            coverage_file = request.files.get("coverage_file", None)
 
             if not use_test_data:
                 filename = coverage_file.filename
@@ -156,6 +156,7 @@ def upload_file():
             )
         except:
             yield '<script type="text/javascript">alert("Exception!");</script>'
+            # yield '<script type="text/javascript">alert("Exception '+ str(traceback.format_exc()).replace("\"", "'") +' ");</script>' 
 
     return app.response_class(stream_with_context(streamed_response()))
 
@@ -198,8 +199,8 @@ def show_finished_jobs(secret_code):
     """
     Provides a page with finished jobs
     """
-    if 1:
-        with open(config.WEBSERVER_JOBS_PATH + config.ALL_JOBS_FILENAME) as f:
+    if secret_code == config.FINISHED_LIST_CODE:
+        with open(config.WEBSERVER_JOBS_PATH + config.ALL_JOBS_FILENAME, encoding='utf-8') as f:
             lines = [x.split("|") for x in f.readlines()]
         for job in lines:
             job.append(os.path.exists(config.WEBSERVER_RESULTS_PATH + job[1] + "/ncRNA.expression.bed"))

@@ -23,6 +23,7 @@ WORKER_SOURCE_PATH = "/scratch/dario/src/"
 WORKER_THREADS = 3
 
 WEB_URL = "http://dario.bioinf.uni-leipzig.de/"
+FINISHED_LIST_CODE = "123"
 
 NEW_PROCESS_FILENAME = "new_process.list"
 JOB_QUEUE_FILENAME = "auto.list"
